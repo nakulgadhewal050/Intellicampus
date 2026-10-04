@@ -100,6 +100,21 @@ export const Login = async (req, res) => {
   }
 };
 
+//Logout
+
+export const Logout = (req, res) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+    });
+    return res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "Error in logout" });
+  }
+};
+
 //currentUser
 
 export const getCurrentUser = async (req, res) => {
@@ -109,8 +124,9 @@ export const getCurrentUser = async (req, res) => {
     }
 
     return res.status(200).json(req.user);
-
   } catch (error) {
-    return res.status(500).json({ message: "getcurrent user not found", error });
+    return res
+      .status(500)
+      .json({ message: "getcurrent user not found", error });
   }
-  }
+};

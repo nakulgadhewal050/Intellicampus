@@ -13,8 +13,8 @@ import React from "react";
 function Sidebar() {
   const navItems = [
     { icon: Home, label: "Dashboard", path: "/user-dashboard" },
-    { icon: Ticket, label: "My Tickets", path: "/tickets" },
-    { icon: Plus, label: "Raise Ticket", path: "/dashboard" },
+    { icon: Ticket, label: "My Tickets", path: "/my-tickets" },
+    { icon: Plus, label: "Raise Ticket", path: "/raise-ticket" },
     { icon: Bot, label: "Ai Copilot", path: "/copilot" },
     { icon: Book, label: "Knowledge Base", path: "/knowledge-base" },
     { icon: User, label: "Profile", path: "/profile" },
@@ -28,7 +28,7 @@ function Sidebar() {
           <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
             <GraduationCap className="w-6 h-6" />
           </div>
-          <h1 className="text-xl font-bold">IntelliCapmpus</h1>
+          <h1 className="text-xl font-bold">IntelliCampus</h1>
         </div>
       </div>
 
@@ -51,7 +51,7 @@ function Sidebar() {
       </nav>
      {/**Logout Button */}
      <div className="p-4 border-t border-slate-700 ">
-      <button className="flex items-center gap-3 w-full px-4 py-3 text-gray-300 hover:bg-slate-800 rounded-lg transition">
+      <button className="flex items-center gap-3 w-full px-4 py-3 text-gray-300 hover:bg-slate-800 rounded-lg transition cursor-pointer">
         <LogOut className="w-5 h-5"/>
         <span className="text-sm font-medium">
           Logout

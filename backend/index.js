@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser'
 import authRouter from './route/authRoute.js'
 const app = express()
 import cors from 'cors'
+import ticketRaiseRouter from './route/ticketRaiseRoute.js'
 
 
 app.use(express.json())
@@ -22,7 +23,7 @@ app.get("/",(req,res)=>{
 })
 
 app.use("/api/auth",authRouter)
-
+app.use("/api/ticket",ticketRaiseRouter)
 
 app.listen(PORT,async () => {
   await connectDb()
