@@ -62,6 +62,7 @@ function Signup() {
           withCredentials: true,
         },
       );
+      
       setLoading(false);
       console.log("signup successful");
       dispatch(setUserData(result.data.user));

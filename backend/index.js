@@ -8,6 +8,7 @@ import authRouter from './route/authRoute.js'
 const app = express()
 import cors from 'cors'
 import ticketRaiseRouter from './route/ticketRaiseRoute.js'
+import adminRouter from './route/adminRoute.js'
 
 
 app.use(express.json())
@@ -24,6 +25,7 @@ app.get("/",(req,res)=>{
 
 app.use("/api/auth",authRouter)
 app.use("/api/ticket",ticketRaiseRouter)
+app.use("/api/admin",adminRouter)
 
 app.listen(PORT,async () => {
   await connectDb()

@@ -176,6 +176,7 @@ function TicketRaised() {
                     <input
                       type="file"
                       name="attachment"
+                      accept="image/jpeg,image/png,application/pdf"
                       hidden
                       onChange={handleChange}
                     />

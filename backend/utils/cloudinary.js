@@ -15,7 +15,7 @@ const uploadOnCloudinary = async (file) => {
     const stream = cloudinary.uploader.upload_stream(
       {
         folder: "intellicampus/tickets",
-        resource_type: "image",
+        resource_type: "auto",
       },
       (error, result) => {
         if (error) {
