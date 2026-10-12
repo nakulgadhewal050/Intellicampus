@@ -229,9 +229,6 @@ function TicketRaised() {
                 <p className="text-green-800 font-semibold text-sm">
                   Ticket submitted successfully!
                 </p>
-                <p className="text-green-600 text-xs mt-0.5">
-                  Our team will get back to you shortly.
-                </p>
               </div>
             </div>
           </div>

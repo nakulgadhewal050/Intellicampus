@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import { Ticket, Clock3, CircleCheck, ArrowRight } from "lucide-react";
 import {useSelector} from "react-redux";
 import GetCurrentTicket from "../hooks/GetCurrentTicket";
 import productImage from "../assets/user.avif";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 
@@ -14,6 +16,9 @@ function UserDashboard() {
   const { userData } = useSelector((state) => state.user);
     const { tickets, loading, error } = useSelector((state) => state.ticket);
   const recentTickets = tickets.slice(0, 4);
+
+   const location = useLocation()
+   const navigate = useNavigate()
 
   const stats = [
     {
@@ -57,6 +62,20 @@ function UserDashboard() {
   const formatTicketId = (id) => `IC-${id.slice(-6).toUpperCase()}`;
   const capitalizeName = (name) =>
     name ? name.charAt(0).toUpperCase() + name.slice(1) : "You";
+ 
+  useEffect(()=>{
+    if(location.state?.accessDenied){
+      toast.error("Access Denied",{
+         toastId: "admin-access-denied"
+      });
+     navigate("/user-dashboard",{
+      replace: true,
+      state: null
+     })
+    }
+  },[location.state, navigate])
+ 
+
 
   return (
     <div className="flex h-screen bg-gray-100">

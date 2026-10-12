@@ -6,6 +6,7 @@ import { serverUrl } from "../App.jsx";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../redux/userSlice.js";
 import { GraduationCap } from "lucide-react";
+import { toast } from "react-toastify";
 
 function Signup() {
   const dispatch = useDispatch();
@@ -62,8 +63,34 @@ function Signup() {
           withCredentials: true,
         },
       );
-      
+
       setLoading(false);
+      toast.success("Login Successful", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        icon: false,
+
+        style: {
+          minHeight: "56px",
+          width: "fit-content",
+          minWidth: "260px",
+          borderRadius: "12px",
+          background: "#2563eb",
+          color: "#ffffff",
+          boxShadow: "0 10px 25px rgba(15, 23, 42, 0.2)",
+          fontSize: "14px",
+          fontWeight: "600",
+          padding: "0 18px",
+        },
+
+        progressStyle: {
+          background: "#bfdbfe",
+        },
+      });
       console.log("signup successful");
       dispatch(setUserData(result.data.user));
       setErrors({});
@@ -81,7 +108,7 @@ function Signup() {
         <div className="text-center mb-8">
           <div className="flex justify-center mb-3">
             <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
-             <GraduationCap className="w-6 h-6" />
+              <GraduationCap className="w-6 h-6" />
             </div>
           </div>
           <h1 className="text-3xl font-bold text-gray-900">IntelliCampus</h1>

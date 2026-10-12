@@ -18,7 +18,12 @@ function App() {
   GetCurrentUser();
 
   const { userData, loading } = useSelector((state) => state.user);
-  if (loading) return <div><Loading/></div>;
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
 
   return (
     <>
@@ -26,25 +31,46 @@ function App() {
         <Route
           path="/"
           element={
-            <Navigate to={userData ? getDashboardPath(userData) : "/login"} replace />
+            <Navigate
+              to={userData ? getDashboardPath(userData) : "/login"}
+              replace
+            />
           }
         />
         <Route
           path="/signup"
           element={
-            !userData ? <Signup /> : <Navigate to={getDashboardPath(userData)} replace />
+            !userData ? (
+              <Signup />
+            ) : (
+              <Navigate to={getDashboardPath(userData)} replace />
+            )
           }
         />
         <Route
           path="/login"
           element={
-            !userData ? <Login /> : <Navigate to={getDashboardPath(userData)} replace />
+            !userData ? (
+              <Login />
+            ) : (
+              <Navigate to={getDashboardPath(userData)} replace />
+            )
           }
         />
         <Route
           path="/user-dashboard"
           element={
-            userData ? <UserDashboard /> : <Navigate to="/login" replace />
+            !userData ? (
+              <Navigate to="/login" replace />
+            ) : userData.role === "Admin" ? (
+              <Navigate
+                to="/admin-dashboard"
+                replace
+                state={{ accessDenied: true }}
+              />
+            ) : (
+              <UserDashboard />
+            )
           }
         />
         <Route
@@ -53,7 +79,11 @@ function App() {
             userData?.role === "Admin" ? (
               <AdminDashboard />
             ) : (
-              <Navigate to={userData ? "/user-dashboard" : "/login"} replace />
+              <Navigate
+                to={userData ? "/user-dashboard" : "/login"}
+                replace
+                state={{ accessDenied: true }}
+              />
             )
           }
         />
@@ -65,9 +95,7 @@ function App() {
         />
         <Route
           path="/my-tickets"
-          element={
-            userData ? <MyTickets /> : <Navigate to="/login" replace />
-          }
+          element={userData ? <MyTickets /> : <Navigate to="/login" replace />}
         />
       </Routes>
     </>
