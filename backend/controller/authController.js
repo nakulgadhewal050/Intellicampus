@@ -2,6 +2,15 @@ import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/token.js";
 
+// Keep authentication responses consistent and never expose the password hash.
+const toClientUser = (user) => ({
+  _id: user._id,
+  fullname: user.fullname,
+  email: user.email,
+  role: user.role,
+  isActive: user.isActive,
+});
+
 {
   /** Signup */
 }
@@ -49,12 +58,7 @@ export const Signup = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "User registered successfully",
-      token,
-      user: {
-        id: user._id,
-        name: user.fullname,
-        email: user.email,
-      },
+      user: toClientUser(user),
     });
   } catch (error) {
     console.log(error);
@@ -93,7 +97,7 @@ export const Login = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    return res.status(200).json(user);
+    return res.status(200).json(toClientUser(user));
   } catch (error) {
     console.log("Login failed", error);
     return res.status(500).json({ message: "login failed:", error });

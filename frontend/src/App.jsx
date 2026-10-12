@@ -8,6 +8,7 @@ import Loading from "./components/Loading.jsx";
 import TicketRaised from "./pages/TicketRaised.jsx";
 import MyTickets from "./pages/MyTickets.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
+import AllTickets from "./pages/admin/AllTickets.jsx";
 export const serverUrl =
   import.meta.env.VITE_BASE_URL || "http://localhost:8000";
 
@@ -88,14 +89,37 @@ function App() {
           }
         />
         <Route
+          path="/all-tickets"
+          element={
+            userData?.role === "Admin" ? (
+              <AllTickets />
+            ) : (
+              <Navigate
+                to={userData ? "/user-dashboard" : "/login"}
+                replace
+                state={{ accessDenied: true }}
+              />
+            )
+          }
+        />
+        <Route
           path="/raise-ticket"
           element={
             userData ? <TicketRaised /> : <Navigate to="/login" replace />
           }
         />
+
         <Route
           path="/my-tickets"
-          element={userData ? <MyTickets /> : <Navigate to="/login" replace />}
+          element={
+            userData?.role === "Admin" ? (
+              <Navigate to={"/admin-dashboard"} replace />
+            ) : userData ? (
+              <MyTickets />
+            ) : (
+              <Navigate to={"/login"} replace state={{ accessDenied: true }} />
+            )
+          }
         />
       </Routes>
     </>

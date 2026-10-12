@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 function UserDashboard() {
   GetCurrentTicket()
   const { userData } = useSelector((state) => state.user);
-    const { tickets, loading, error } = useSelector((state) => state.ticket);
+  const { tickets, loading, error } = useSelector((state) => state.ticket);
   const recentTickets = tickets.slice(0, 4);
 
    const location = useLocation()

@@ -8,17 +8,28 @@ import {
   Ticket,
   User,
 } from "lucide-react";
-import React from "react";
+import {useSelector} from "react-redux";
+
 
 function Sidebar() {
-  const navItems = [
-    { icon: Home, label: "Dashboard", path: "/user-dashboard" },
-    { icon: Ticket, label: "My Tickets", path: "/my-tickets" },
-    { icon: Plus, label: "Raise Ticket", path: "/raise-ticket" },
-    { icon: Bot, label: "Ai Copilot", path: "/copilot" },
-    { icon: Book, label: "Knowledge Base", path: "/knowledge-base" },
-    { icon: User, label: "Profile", path: "/profile" },
-  ];
+  const { userData } = useSelector((state) => state.user);
+
+  const navItems = userData?.role === "Student"
+    ? [
+      { icon: Home, label: "Dashboard", path: "/user-dashboard" },
+      { icon: Ticket, label: "My Tickets", path: "/my-tickets" },
+      { icon: Plus, label: "Raise Ticket", path: "/raise-ticket" },
+      { icon: Bot, label: "Ai Copilot", path: "/copilot" },
+      { icon: Book, label: "Knowledge Base", path: "/knowledge-base" },
+      { icon: User, label: "Profile", path: "/profile" }
+    ]
+    : [
+        { icon: Home, label: "Dashboard", path: "/admin-dashboard" },
+        { icon: Ticket, label: "All Tickets", path: "/all-tickets" },
+        { icon: Plus, label: "Users", path: "/raise-ticket" },
+        { icon: Bot, label: "Categories", path: "/copilot" },
+        { icon: Book, label: "Reports", path: "/knowledge-base" }
+      ];
 
   return (
     <aside className="w-64 bg-slate-900 text-white flex flex-col h-screen">

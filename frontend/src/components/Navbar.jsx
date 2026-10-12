@@ -10,6 +10,7 @@ function Navbar() {
   const [showProflile, SetShowProfile] = useState(false);
   const { userData } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const displayName = userData?.fullname || "User";
 
   const handleLogout = async () => {
     try {
@@ -50,14 +51,13 @@ function Navbar() {
               className="flex items-center gap-3 hover:bg-gray-100 px-3 py-2 rounded-lg transition"
             >
               <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
-                {userData.fullname.charAt(0).toUpperCase()}
+                {displayName.charAt(0).toUpperCase()}
               </div>
               <div className="text-left">
                 <p className="text-sm font-semibold text-gray-900">
-                  {userData.fullname.charAt(0).toUpperCase() +
-                    userData.fullname.slice(1)}
+                  {displayName.charAt(0).toUpperCase() + displayName.slice(1)}
                 </p>
-                <p className="text-xs text-gray-500">{userData.role}</p>
+                <p className="text-xs text-gray-500">{userData?.role}</p>
               </div>
               {!showProflile ? (
                 <ChevronDown className="w-4 h-4 text-gray-600" />
