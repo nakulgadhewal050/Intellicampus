@@ -326,7 +326,7 @@ function AdminDashboard() {
                   Recent Tickets
                 </h3>
                 <a
-                  href="/my-tickets"
+                  href="/all-tickets"
                   className="text-blue-600 hover:text-blue-700 flex items-center gap-1 text-sm font-medium"
                 >
                   View All <ArrowRight className="w-4 h-4" />
@@ -378,7 +378,7 @@ function AdminDashboard() {
                         {ticketsError}
                       </td>
                     </tr>
-                  ) : tickets.length === 0 ? (
+                  ) : recentTickets.length === 0 ? (
                     <tr>
                       <td
                         colSpan="7"

@@ -26,7 +26,7 @@ function Sidebar() {
     : [
         { icon: Home, label: "Dashboard", path: "/admin-dashboard" },
         { icon: Ticket, label: "All Tickets", path: "/all-tickets" },
-        { icon: Plus, label: "Users", path: "/raise-ticket" },
+        { icon: Plus, label: "Users", path: "/all-users" },
         { icon: Bot, label: "Categories", path: "/copilot" },
         { icon: Book, label: "Reports", path: "/knowledge-base" }
       ];

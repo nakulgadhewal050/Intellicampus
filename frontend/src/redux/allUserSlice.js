@@ -3,11 +3,18 @@ import { createSlice } from "@reduxjs/toolkit";
 const allUserSlice = createSlice({
   name: "allUser",
   initialState: {
-  allUsers: [],
-  totalUsers: 0,
-  loading: false,
-  error: null,
-},
+    allUsers: [],
+    totalUsers: 0,
+    loading: false,
+    error: null,
+    isActive: null,
+    filters: {
+      status: "",
+      category: "",
+      priority: "",
+      search: "",
+    },
+  },
   reducers: {
     setAllUsers: (state, action) => {
       state.allUsers = action.payload.users ?? [];
@@ -22,6 +29,12 @@ const allUserSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    setFilters: (state, action) => {
+      state.filters = { ...state.filters, ...action.payload };
+    },
+    setIsActive: (state, action) => {
+      state.isActive = action.payload;
+    },
     clearUsers: (state) => {
       state.allUsers = [];
       state.totalUsers = 0;
@@ -34,6 +47,8 @@ export const {
   setAllUsers,
   setAllUserLoading,
   setAllUserError,
+  setFilters,
+  setIsActive,
   clearUsers,
 } = allUserSlice.actions;
 

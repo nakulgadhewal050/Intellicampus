@@ -55,7 +55,15 @@ function Navbar() {
               </div>
               <div className="text-left">
                 <p className="text-sm font-semibold text-gray-900">
-                  {displayName.charAt(0).toUpperCase() + displayName.slice(1)}
+                  {displayName
+                    .trim()
+                    .split(/\s+/)
+                    .map(
+                      (part) =>
+                        part.charAt(0).toUpperCase() +
+                        part.slice(1).toLowerCase(),
+                    )
+                    .join(" ")}
                 </p>
                 <p className="text-xs text-gray-500">{userData?.role}</p>
               </div>

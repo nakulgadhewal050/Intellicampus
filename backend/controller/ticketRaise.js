@@ -62,7 +62,8 @@ export const getUserTickets = async (req, res) => {
   try {
     const tickets = await Ticket.find({ raisedBy: req.user._id })
       .sort({ createdAt: -1 })
-      .populate("raisedBy", "fullname email");
+      .populate("raisedBy", "fullname email")
+      .populate("assignedTo", "fullname email");
 
     return res.status(200).json({
       success: true,

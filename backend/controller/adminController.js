@@ -1,5 +1,6 @@
 import User from "../models/userModel.js";
 import Ticket from "../models/ticketRaise.js";
+import mongoose from "mongoose";
 
 export const getAdminDashboard = async (req, res) => {
   try {
@@ -56,6 +57,60 @@ export const getAllTickets = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Internal Server Error",
+    });
+  }
+};
+
+export const updateTicketByAdmin = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const allowedStatus = ["New", "In-Progress", "On-Hold", "Closed"];
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid ticket ID",
+      });
+    }
+
+    if (!allowedStatus.includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid ticket status",
+      });
+    }
+
+    const ticket = await Ticket.findByIdAndUpdate(
+      id,
+      {
+        status,
+        assignedTo: req.user._id,
+        resolvedAt: status === "Closed" ? new Date() : null,
+      },
+      { new: true, runValidators: true },
+    )
+      .populate("raisedBy", "fullname email")
+      .populate("assignedTo", "fullname email");
+
+    if (!ticket) {
+      return res.status(400).json({
+        success: false,
+        message: "Ticket not found",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Ticket updated successfully",
+      ticket,
+    });
+  } catch (error) {
+    console.error("Admin ticket update failed", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Unable to update ticket",
     });
   }
 };

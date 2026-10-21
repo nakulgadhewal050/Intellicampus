@@ -9,6 +9,7 @@ import TicketRaised from "./pages/TicketRaised.jsx";
 import MyTickets from "./pages/MyTickets.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import AllTickets from "./pages/admin/AllTickets.jsx";
+import AllUsers from "./pages/admin/AllUsers.jsx";
 export const serverUrl =
   import.meta.env.VITE_BASE_URL || "http://localhost:8000";
 
@@ -118,6 +119,21 @@ function App() {
               <MyTickets />
             ) : (
               <Navigate to={"/login"} replace state={{ accessDenied: true }} />
+            )
+          }
+        />
+
+        <Route
+          path="/all-users"
+          element={
+            userData?.role === "Admin" ? (
+              <AllUsers/>
+            ) : (
+              <Navigate
+                to={userData ? "/user-dashboard" : "/login"}
+                replace
+                state={{ accessDenied: true }}
+              />
             )
           }
         />
