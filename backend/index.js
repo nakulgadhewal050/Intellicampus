@@ -1,6 +1,5 @@
 import express from 'express'
-import dotenv from 'dotenv'
-dotenv.config()
+import 'dotenv/config'
 const PORT = process.env.PORT
 import connectDb from './config/dataBase.js'
 import cookieParser from 'cookie-parser'

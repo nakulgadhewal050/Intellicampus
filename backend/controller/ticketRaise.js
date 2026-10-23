@@ -1,8 +1,9 @@
 import Ticket from "../models/ticketRaise.js";
+import User from "../models/userModel.js";
 import uploadOnCloudinary from "../utils/cloudinary.js";
+import { sendTicketRaisedEmail } from "./emailController.js";
 
 export const ticketRaise = async (req, res) => {
-
   try {
     const { title, category, priority, description } = req.body;
     if (!title || !category || !description) {
@@ -33,7 +34,7 @@ export const ticketRaise = async (req, res) => {
         publicId: uploadFile.public_id,
       });
     }
-    
+
     const ticket = await Ticket.create({
       title,
       category,
@@ -42,6 +43,20 @@ export const ticketRaise = async (req, res) => {
       raisedBy: req.user._id,
       attachments,
     });
+
+    const admin = await User.findOne({ role: "Admin", isActive: true }).select(
+      "email",
+    );
+
+    if (!admin) {
+      return res.status(500).json({
+        success: false,
+        message: "No active admin found to notify",
+      });
+    }
+
+    await sendTicketRaisedEmail(admin.email, ticket);
+
     res.status(201).json({
       success: true,
       message: "ticket registered successfully",

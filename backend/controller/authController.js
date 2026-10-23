@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/token.js";
+import { sendWelcomeEmail } from "./emailController.js";
 
 // Keep authentication responses consistent and never expose the password hash.
 const toClientUser = (user) => ({
@@ -43,6 +44,8 @@ export const Signup = async (req, res) => {
       email,
       password: hashPassword,
     });
+
+    await sendWelcomeEmail(user.email,user.fullname)
 
     const token = generateToken(user._id);
 

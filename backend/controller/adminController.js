@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import Ticket from "../models/ticketRaise.js";
 import mongoose from "mongoose";
+import { sendResolvedEmail } from "./emailController.js";
 
 export const getAdminDashboard = async (req, res) => {
   try {
@@ -100,6 +101,11 @@ export const updateTicketByAdmin = async (req, res) => {
         message: "Ticket not found",
       });
     }
+
+    if (status === "Closed") {
+      await sendResolvedEmail(ticket.raisedBy.email, ticket);
+    }
+
     return res.status(200).json({
       success: true,
       message: "Ticket updated successfully",
